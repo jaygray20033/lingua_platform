@@ -1,0 +1,28 @@
+# Dependencies
+node_modules/
+lingua-frontend/node_modules/
+
+# Build output
+lingua-frontend/dist/
+lingua-backend/target/
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# Environment
+.env
+.dev.vars
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Java
+*.class
+*.jar
+*.war
+
+# Logs
+*.log
