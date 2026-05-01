@@ -1,0 +1,76 @@
+# =============================================================================
+# Sample Nginx config for the Lingua platform — production reverse proxy.
+#
+# BUG-BE-06: when deploying behind Nginx make sure CORS preflight (OPTIONS)
+# requests reach the backend with the original `Origin` / `Access-Control-*`
+# headers intact. Without this, some browsers (Safari/Firefox in strict mode)
+# refuse the response and the global CORS config in application.properties
+# never gets a chance to run.
+#
+# Drop this file into /etc/nginx/conf.d/lingua.conf and adjust the domains.
+# =============================================================================
+
+upstream lingua_backend {
+    server 127.0.0.1:8080;
+    keepalive 32;
+}
+
+server {
+    listen 80;
+    listen [::]:80;
+    server_name lingua.yourdomain.com;
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+    server_name lingua.yourdomain.com;
+
+    ssl_certificate     /etc/letsencrypt/live/lingua.yourdomain.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/lingua.yourdomain.com/privkey.pem;
+
+    # ---- Frontend (built React app) ----
+    root /var/www/lingua/dist;
+    index index.html;
+
+    # SPA fallback
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+
+    # ---- Backend API ----
+    location /api/ {
+        proxy_pass http://lingua_backend;
+
+        # BUG-BE-06: forward original headers so Quarkus' CORS filter can
+        # match the real Origin instead of the proxy's loopback address.
+        proxy_http_version 1.1;
+        proxy_set_header Host              $host;
+        proxy_set_header X-Real-IP         $remote_addr;
+        proxy_set_header X-Forwarded-For   $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Forwarded-Host  $host;
+        proxy_set_header Origin            $http_origin;
+        proxy_set_header Connection        "";
+
+        proxy_read_timeout  60s;
+        proxy_send_timeout  60s;
+        proxy_connect_timeout 10s;
+
+        # Let Quarkus handle CORS — do NOT inject Access-Control-* headers here.
+        # Adding them in Nginx + Quarkus simultaneously produces duplicates.
+    }
+
+    # Static assets (cached for 1 week)
+    location ~* \.(?:css|js|woff2?|svg|png|jpg|jpeg|gif|ico)$ {
+        expires 7d;
+        access_log off;
+        add_header Cache-Control "public";
+    }
+
+    # Security headers
+    add_header X-Frame-Options       "SAMEORIGIN"      always;
+    add_header X-Content-Type-Options "nosniff"        always;
+    add_header Referrer-Policy       "strict-origin-when-cross-origin" always;
+}

@@ -1,0 +1,51 @@
+# Dependencies
+node_modules/
+lingua-frontend/node_modules/
+
+# Build output
+lingua-frontend/dist/
+lingua-backend/target/
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# Environment & Secrets — NEVER commit these
+.env
+.env.local
+.env.*.local
+.dev.vars
+
+# BUG-02: JWT private keys — must NOT be in git
+secrets/
+**/secrets/
+*.pem
+**/*.pem
+!**/publicKey.pem
+lingua-backend/src/main/resources/privateKey.pem
+**/privateKey.pem
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Java
+*.class
+*.jar
+*.war
+
+# Logs
+*.log
+logs/
+
+# PM2
+.pm2/
+
+# Backup files
+*.backup
+*.bak
+*.tar.gz
+
+# Claude Code
+.claude

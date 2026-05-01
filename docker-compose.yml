@@ -1,0 +1,108 @@
+# BUG-11: docker-compose hoàn chỉnh — one-command deploy
+# Tất cả credentials đọc từ `.env` (xem .env.example). KHÔNG commit `.env` thật.
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: lingua-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:?MYSQL_ROOT_PASSWORD must be set in .env}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-lingua_db}
+      MYSQL_USER: ${MYSQL_USER:-lingua}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:?MYSQL_PASSWORD must be set in .env}
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./mysql-init:/docker-entrypoint-initdb.d
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    healthcheck:
+      test: ["CMD-SHELL", "mysql -u lingua -plingua123 lingua_db -e 'SELECT 1' 2>/dev/null"]
+      interval: 10s
+      timeout: 20s
+      retries: 10
+      start_period: 60s
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    container_name: lingua-redis
+    ports:
+      - "6380:6379"
+    volumes:
+      - redis_data:/data
+    # BUG-BE-03: Redis healthcheck so dependent services can wait for it.
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+    restart: unless-stopped
+
+  # BUG-11: backend service — Quarkus + JWT + MySQL + Redis
+  backend:
+    build:
+      context: ./lingua-backend
+      dockerfile: Dockerfile
+    container_name: lingua-backend
+    environment:
+      # Datasource — kết nối tới MySQL container qua hostname "mysql"
+      DB_USERNAME: ${MYSQL_USER:-lingua}
+      DB_PASSWORD: ${MYSQL_PASSWORD:?MYSQL_PASSWORD must be set in .env}
+      DB_JDBC_URL: jdbc:mysql://mysql:3306/${MYSQL_DATABASE:-lingua_db}?useUnicode=true&characterEncoding=UTF-8&connectionCollation=utf8mb4_unicode_ci&serverTimezone=UTC&allowPublicKeyRetrieval=true&useSSL=false
+      # Redis container — hostname "redis"
+      REDIS_URL: redis://redis:6379
+      # Flyway — bật migrate khi start (BUG-01: đã hỗ trợ MySQL 8 với flyway-mysql 10.x)
+      FLYWAY_ENABLED: ${FLYWAY_ENABLED:-true}
+      FLYWAY_MIGRATE_AT_START: ${FLYWAY_MIGRATE_AT_START:-true}
+      # JWT — đọc private key từ secret mount (BUG-02)
+      JWT_PRIVATE_KEY_LOCATION: /app/secrets/privateKey.pem
+      JWT_ISSUER: ${JWT_ISSUER:-lingua-platform}
+      JWT_LIFESPAN_SECONDS: ${JWT_LIFESPAN_SECONDS:-3600}
+      # CORS — frontend container
+      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost,http://localhost:5173,http://localhost:3000}
+      HTTP_PORT: 8080
+      # Pool DB (TECH-07)
+      DB_POOL_MIN: ${DB_POOL_MIN:-5}
+      DB_POOL_MAX: ${DB_POOL_MAX:-20}
+    volumes:
+      # BUG-02: mount private key từ host vào container, KHÔNG bake vào image
+      - ./lingua-backend/secrets:/app/secrets:ro
+    ports:
+      - "${BACKEND_PORT:-8080}:8080"
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8080/api/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 60s
+    restart: unless-stopped
+
+  # BUG-11: frontend service — React + Nginx, proxy /api → backend:8080
+  frontend:
+    build:
+      context: ./lingua-frontend
+      dockerfile: Dockerfile
+    container_name: lingua-frontend
+    ports:
+      - "${FRONTEND_PORT:-80}:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://127.0.0.1/"]
+      interval: 15s
+      timeout: 3s
+      retries: 5
+      start_period: 10s
+    restart: unless-stopped
+
+volumes:
+  mysql_data:
+  redis_data:

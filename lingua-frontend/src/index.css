@@ -1,0 +1,60 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --lingua-green: #58CC02;
+  --lingua-red: #FF4B4B;
+  --lingua-orange: #FF9600;
+  --lingua-blue: #1CB0F6;
+  --lingua-purple: #CE82FF;
+  --lingua-gold: #FFD900;
+}
+
+body {
+  font-family: 'Inter', 'Noto Sans JP', 'Noto Sans SC', system-ui, sans-serif;
+  @apply bg-gray-50 text-gray-900;
+}
+
+.dark body { @apply bg-gray-900 text-gray-100; }
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { @apply bg-gray-100; }
+::-webkit-scrollbar-thumb { @apply bg-gray-300 rounded-full; }
+::-webkit-scrollbar-thumb:hover { @apply bg-gray-400; }
+
+.flip-card { perspective: 1000px; }
+.flip-card-inner {
+  position: relative;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+}
+.flip-card-inner.flipped { transform: rotateY(180deg); }
+.flip-card-front, .flip-card-back {
+  position: absolute;
+  width: 100%;
+  backface-visibility: hidden;
+}
+.flip-card-back { transform: rotateY(180deg); }
+
+.progress-bar-fill {
+  transition: width 0.5s ease-in-out;
+}
+
+.exercise-enter { animation: slideUp 0.3s ease-out; }
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.feedback-correct { animation: pulseGreen 0.5s ease; }
+@keyframes pulseGreen {
+  0%, 100% { background-color: transparent; }
+  50% { background-color: rgba(88, 204, 2, 0.2); }
+}
+.feedback-wrong { animation: shakeRed 0.5s ease; }
+@keyframes shakeRed {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}

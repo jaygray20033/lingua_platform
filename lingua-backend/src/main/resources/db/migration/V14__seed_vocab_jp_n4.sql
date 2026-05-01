@@ -1,0 +1,250 @@
+-- =====================================================================
+-- V14__seed_vocab_jp_n4.sql
+-- UPGRADE-04: Seed N4 Japanese vocabulary (~150 commonly tested words).
+-- Each word has primary Vietnamese meaning + example sentence.
+-- =====================================================================
+
+SET @lang_jp := (SELECT id FROM languages WHERE code = 'ja' LIMIT 1);
+
+INSERT IGNORE INTO words (language_id, text, reading, romaji, pos, jlpt_level, frequency_rank) VALUES
+(@lang_jp, '会議', 'かいぎ', 'kaigi', 'NOUN', 'N4', 510),
+(@lang_jp, '計画', 'けいかく', 'keikaku', 'NOUN', 'N4', 511),
+(@lang_jp, '経験', 'けいけん', 'keiken', 'NOUN', 'N4', 512),
+(@lang_jp, '景色', 'けしき', 'keshiki', 'NOUN', 'N4', 513),
+(@lang_jp, '結婚', 'けっこん', 'kekkon', 'NOUN', 'N4', 514),
+(@lang_jp, '原因', 'げんいん', 'gen-in', 'NOUN', 'N4', 515),
+(@lang_jp, '効果', 'こうか', 'kouka', 'NOUN', 'N4', 516),
+(@lang_jp, '工業', 'こうぎょう', 'kougyou', 'NOUN', 'N4', 517),
+(@lang_jp, '高校', 'こうこう', 'koukou', 'NOUN', 'N4', 518),
+(@lang_jp, '工場', 'こうじょう', 'koujou', 'NOUN', 'N4', 519),
+(@lang_jp, '校長', 'こうちょう', 'kouchou', 'NOUN', 'N4', 520),
+(@lang_jp, '交通', 'こうつう', 'koutsuu', 'NOUN', 'N4', 521),
+(@lang_jp, '講堂', 'こうどう', 'koudou', 'NOUN', 'N4', 522),
+(@lang_jp, '公務員', 'こうむいん', 'koumuin', 'NOUN', 'N4', 523),
+(@lang_jp, '国際', 'こくさい', 'kokusai', 'NOUN', 'N4', 524),
+(@lang_jp, '心', 'こころ', 'kokoro', 'NOUN', 'N4', 525),
+(@lang_jp, '故障', 'こしょう', 'koshou', 'NOUN', 'N4', 526),
+(@lang_jp, '答え', 'こたえ', 'kotae', 'NOUN', 'N4', 527),
+(@lang_jp, '今度', 'こんど', 'kondo', 'NOUN', 'N4', 528),
+(@lang_jp, '今夜', 'こんや', 'konya', 'NOUN', 'N4', 529),
+(@lang_jp, '最近', 'さいきん', 'saikin', 'NOUN', 'N4', 530),
+(@lang_jp, '最後', 'さいご', 'saigo', 'NOUN', 'N4', 531),
+(@lang_jp, '最初', 'さいしょ', 'saisho', 'NOUN', 'N4', 532),
+(@lang_jp, '坂', 'さか', 'saka', 'NOUN', 'N4', 533),
+(@lang_jp, '盛ん', 'さかん', 'sakan', 'ADJ', 'N4', 534),
+(@lang_jp, '差し上げる', 'さしあげる', 'sashiageru', 'VERB', 'N4', 535),
+(@lang_jp, '寂しい', 'さびしい', 'sabishii', 'ADJ', 'N4', 536),
+(@lang_jp, '産業', 'さんぎょう', 'sangyou', 'NOUN', 'N4', 537),
+(@lang_jp, '残念', 'ざんねん', 'zannen', 'ADJ', 'N4', 538),
+(@lang_jp, '市', 'し', 'shi', 'NOUN', 'N4', 539),
+(@lang_jp, '字', 'じ', 'ji', 'NOUN', 'N4', 540),
+(@lang_jp, '試合', 'しあい', 'shiai', 'NOUN', 'N4', 541),
+(@lang_jp, '叱る', 'しかる', 'shikaru', 'VERB', 'N4', 542),
+(@lang_jp, '試験', 'しけん', 'shiken', 'NOUN', 'N4', 543),
+(@lang_jp, '事故', 'じこ', 'jiko', 'NOUN', 'N4', 544),
+(@lang_jp, '地震', 'じしん', 'jishin', 'NOUN', 'N4', 545),
+(@lang_jp, '時代', 'じだい', 'jidai', 'NOUN', 'N4', 546),
+(@lang_jp, '下着', 'したぎ', 'shitagi', 'NOUN', 'N4', 547),
+(@lang_jp, '支度', 'したく', 'shitaku', 'NOUN', 'N4', 548),
+(@lang_jp, '失敗', 'しっぱい', 'shippai', 'NOUN', 'N4', 549),
+(@lang_jp, '失礼', 'しつれい', 'shitsurei', 'NOUN', 'N4', 550),
+(@lang_jp, '辞典', 'じてん', 'jiten', 'NOUN', 'N4', 551),
+(@lang_jp, '品物', 'しなもの', 'shinamono', 'NOUN', 'N4', 552),
+(@lang_jp, '島', 'しま', 'shima', 'NOUN', 'N4', 553),
+(@lang_jp, '市民', 'しみん', 'shimin', 'NOUN', 'N4', 554),
+(@lang_jp, '社会', 'しゃかい', 'shakai', 'NOUN', 'N4', 555),
+(@lang_jp, '社長', 'しゃちょう', 'shachou', 'NOUN', 'N4', 556),
+(@lang_jp, '邪魔', 'じゃま', 'jama', 'NOUN', 'N4', 557),
+(@lang_jp, '自由', 'じゆう', 'jiyuu', 'NOUN', 'N4', 558),
+(@lang_jp, '習慣', 'しゅうかん', 'shuukan', 'NOUN', 'N4', 559),
+(@lang_jp, '住所', 'じゅうしょ', 'juusho', 'NOUN', 'N4', 560),
+(@lang_jp, '柔道', 'じゅうどう', 'juudou', 'NOUN', 'N4', 561),
+(@lang_jp, '十分', 'じゅうぶん', 'juubun', 'ADJ', 'N4', 562),
+(@lang_jp, '出席', 'しゅっせき', 'shusseki', 'NOUN', 'N4', 563),
+(@lang_jp, '出発', 'しゅっぱつ', 'shuppatsu', 'NOUN', 'N4', 564),
+(@lang_jp, '趣味', 'しゅみ', 'shumi', 'NOUN', 'N4', 565),
+(@lang_jp, '準備', 'じゅんび', 'junbi', 'NOUN', 'N4', 566),
+(@lang_jp, '紹介', 'しょうかい', 'shoukai', 'NOUN', 'N4', 567),
+(@lang_jp, '正月', 'しょうがつ', 'shougatsu', 'NOUN', 'N4', 568),
+(@lang_jp, '小学校', 'しょうがっこう', 'shougakkou', 'NOUN', 'N4', 569),
+(@lang_jp, '将来', 'しょうらい', 'shourai', 'NOUN', 'N4', 570),
+(@lang_jp, '食事', 'しょくじ', 'shokuji', 'NOUN', 'N4', 571),
+(@lang_jp, '食料品', 'しょくりょうひん', 'shokuryouhin', 'NOUN', 'N4', 572),
+(@lang_jp, '女性', 'じょせい', 'josei', 'NOUN', 'N4', 573),
+(@lang_jp, '知らせる', 'しらせる', 'shiraseru', 'VERB', 'N4', 574),
+(@lang_jp, '調べる', 'しらべる', 'shiraberu', 'VERB', 'N4', 575),
+(@lang_jp, '人口', 'じんこう', 'jinkou', 'NOUN', 'N4', 576),
+(@lang_jp, '神社', 'じんじゃ', 'jinja', 'NOUN', 'N4', 577),
+(@lang_jp, '親切', 'しんせつ', 'shinsetsu', 'ADJ', 'N4', 578),
+(@lang_jp, '心配', 'しんぱい', 'shinpai', 'NOUN', 'N4', 579),
+(@lang_jp, '新聞社', 'しんぶんしゃ', 'shinbunsha', 'NOUN', 'N4', 580),
+(@lang_jp, '水泳', 'すいえい', 'suiei', 'NOUN', 'N4', 581),
+(@lang_jp, '水道', 'すいどう', 'suidou', 'NOUN', 'N4', 582),
+(@lang_jp, '随分', 'ずいぶん', 'zuibun', 'ADV', 'N4', 583),
+(@lang_jp, '数学', 'すうがく', 'suugaku', 'NOUN', 'N4', 584),
+(@lang_jp, '過ぎる', 'すぎる', 'sugiru', 'VERB', 'N4', 585),
+(@lang_jp, '直ぐに', 'すぐに', 'suguni', 'ADV', 'N4', 586),
+(@lang_jp, '凄い', 'すごい', 'sugoi', 'ADJ', 'N4', 587),
+(@lang_jp, '進む', 'すすむ', 'susumu', 'VERB', 'N4', 588),
+(@lang_jp, '捨てる', 'すてる', 'suteru', 'VERB', 'N4', 589),
+(@lang_jp, '滑る', 'すべる', 'suberu', 'VERB', 'N4', 590),
+(@lang_jp, '隅', 'すみ', 'sumi', 'NOUN', 'N4', 591),
+(@lang_jp, '住む', 'すむ', 'sumu', 'VERB', 'N4', 592),
+(@lang_jp, '掏摸', 'すり', 'suri', 'NOUN', 'N4', 593),
+(@lang_jp, '生活', 'せいかつ', 'seikatsu', 'NOUN', 'N4', 594),
+(@lang_jp, '政治', 'せいじ', 'seiji', 'NOUN', 'N4', 595),
+(@lang_jp, '西洋', 'せいよう', 'seiyou', 'NOUN', 'N4', 596),
+(@lang_jp, '世界', 'せかい', 'sekai', 'NOUN', 'N4', 597),
+(@lang_jp, '席', 'せき', 'seki', 'NOUN', 'N4', 598),
+(@lang_jp, '説明', 'せつめい', 'setsumei', 'NOUN', 'N4', 599),
+(@lang_jp, '世話', 'せわ', 'sewa', 'NOUN', 'N4', 600),
+(@lang_jp, '線', 'せん', 'sen', 'NOUN', 'N4', 601),
+(@lang_jp, '全然', 'ぜんぜん', 'zenzen', 'ADV', 'N4', 602),
+(@lang_jp, '戦争', 'せんそう', 'sensou', 'NOUN', 'N4', 603),
+(@lang_jp, '専門', 'せんもん', 'senmon', 'NOUN', 'N4', 604),
+(@lang_jp, '相談', 'そうだん', 'soudan', 'NOUN', 'N4', 605),
+(@lang_jp, '育てる', 'そだてる', 'sodateru', 'VERB', 'N4', 606),
+(@lang_jp, '卒業', 'そつぎょう', 'sotsugyou', 'NOUN', 'N4', 607),
+(@lang_jp, '祖父', 'そふ', 'sofu', 'NOUN', 'N4', 608),
+(@lang_jp, '祖母', 'そぼ', 'sobo', 'NOUN', 'N4', 609),
+(@lang_jp, '退院', 'たいいん', 'taiin', 'NOUN', 'N4', 610),
+(@lang_jp, '大学生', 'だいがくせい', 'daigakusei', 'NOUN', 'N4', 611),
+(@lang_jp, '大事', 'だいじ', 'daiji', 'ADJ', 'N4', 612),
+(@lang_jp, '大体', 'だいたい', 'daitai', 'ADV', 'N4', 613),
+(@lang_jp, '台所', 'だいどころ', 'daidokoro', 'NOUN', 'N4', 614),
+(@lang_jp, '台風', 'たいふう', 'taifuu', 'NOUN', 'N4', 615),
+(@lang_jp, '倒れる', 'たおれる', 'taoreru', 'VERB', 'N4', 616),
+(@lang_jp, '足す', 'たす', 'tasu', 'VERB', 'N4', 617),
+(@lang_jp, '訪ねる', 'たずねる', 'tazuneru', 'VERB', 'N4', 618),
+(@lang_jp, '正しい', 'ただしい', 'tadashii', 'ADJ', 'N4', 619),
+(@lang_jp, '畳', 'たたみ', 'tatami', 'NOUN', 'N4', 620),
+(@lang_jp, '立てる', 'たてる', 'tateru', 'VERB', 'N4', 621),
+(@lang_jp, '建てる', 'たてる', 'tateru', 'VERB', 'N4', 622),
+(@lang_jp, '楽しみ', 'たのしみ', 'tanoshimi', 'NOUN', 'N4', 623),
+(@lang_jp, '足りる', 'たりる', 'tariru', 'VERB', 'N4', 624),
+(@lang_jp, '男性', 'だんせい', 'dansei', 'NOUN', 'N4', 625),
+(@lang_jp, '暖房', 'だんぼう', 'danbou', 'NOUN', 'N4', 626),
+(@lang_jp, '血', 'ち', 'chi', 'NOUN', 'N4', 627),
+(@lang_jp, '力', 'ちから', 'chikara', 'NOUN', 'N4', 628),
+(@lang_jp, '注意', 'ちゅうい', 'chuui', 'NOUN', 'N4', 629),
+(@lang_jp, '中学校', 'ちゅうがっこう', 'chuugakkou', 'NOUN', 'N4', 630),
+(@lang_jp, '注射', 'ちゅうしゃ', 'chuusha', 'NOUN', 'N4', 631),
+(@lang_jp, '駐車場', 'ちゅうしゃじょう', 'chuushajou', 'NOUN', 'N4', 632),
+(@lang_jp, '地理', 'ちり', 'chiri', 'NOUN', 'N4', 633),
+(@lang_jp, '通る', 'とおる', 'tooru', 'VERB', 'N4', 634),
+(@lang_jp, '都合', 'つごう', 'tsugou', 'NOUN', 'N4', 635),
+(@lang_jp, '伝える', 'つたえる', 'tsutaeru', 'VERB', 'N4', 636),
+(@lang_jp, '続く', 'つづく', 'tsuzuku', 'VERB', 'N4', 637),
+(@lang_jp, '包む', 'つつむ', 'tsutsumu', 'VERB', 'N4', 638),
+(@lang_jp, '妻', 'つま', 'tsuma', 'NOUN', 'N4', 639),
+(@lang_jp, '積もり', 'つもり', 'tsumori', 'NOUN', 'N4', 640),
+(@lang_jp, '釣る', 'つる', 'tsuru', 'VERB', 'N4', 641),
+(@lang_jp, '丁寧', 'ていねい', 'teinei', 'ADJ', 'N4', 642),
+(@lang_jp, '適当', 'てきとう', 'tekitou', 'ADJ', 'N4', 643),
+(@lang_jp, '出来る', 'できる', 'dekiru', 'VERB', 'N4', 644),
+(@lang_jp, '点', 'てん', 'ten', 'NOUN', 'N4', 645),
+(@lang_jp, '店員', 'てんいん', 'ten-in', 'NOUN', 'N4', 646),
+(@lang_jp, '天気予報', 'てんきよほう', 'tenkiyohou', 'NOUN', 'N4', 647),
+(@lang_jp, '伝記', 'でんき', 'denki', 'NOUN', 'N4', 648),
+(@lang_jp, '展覧会', 'てんらんかい', 'tenrankai', 'NOUN', 'N4', 649),
+(@lang_jp, '道具', 'どうぐ', 'dougu', 'NOUN', 'N4', 650),
+(@lang_jp, '途中', 'とちゅう', 'tochuu', 'NOUN', 'N4', 651),
+(@lang_jp, '特急', 'とっきゅう', 'tokkyuu', 'NOUN', 'N4', 652),
+(@lang_jp, '泥棒', 'どろぼう', 'dorobou', 'NOUN', 'N4', 653),
+(@lang_jp, '無くなる', 'なくなる', 'nakunaru', 'VERB', 'N4', 654),
+(@lang_jp, '亡くなる', 'なくなる', 'nakunaru', 'VERB', 'N4', 655),
+(@lang_jp, '投げる', 'なげる', 'nageru', 'VERB', 'N4', 656),
+(@lang_jp, '為に', 'ために', 'tameni', 'PARTICLE', 'N4', 657),
+(@lang_jp, '日記', 'にっき', 'nikki', 'NOUN', 'N4', 658),
+(@lang_jp, '人形', 'にんぎょう', 'ningyou', 'NOUN', 'N4', 659),
+(@lang_jp, '盗む', 'ぬすむ', 'nusumu', 'VERB', 'N4', 660),
+(@lang_jp, '塗る', 'ぬる', 'nuru', 'VERB', 'N4', 661),
+(@lang_jp, '値段', 'ねだん', 'nedan', 'NOUN', 'N4', 662),
+(@lang_jp, '熱', 'ねつ', 'netsu', 'NOUN', 'N4', 663),
+(@lang_jp, '寝坊', 'ねぼう', 'nebou', 'NOUN', 'N4', 664),
+(@lang_jp, '残る', 'のこる', 'nokoru', 'VERB', 'N4', 665),
+(@lang_jp, '喉', 'のど', 'nodo', 'NOUN', 'N4', 666),
+(@lang_jp, '乗り換え', 'のりかえ', 'norikae', 'NOUN', 'N4', 667),
+(@lang_jp, '葉', 'は', 'ha', 'NOUN', 'N4', 668),
+(@lang_jp, '場合', 'ばあい', 'baai', 'NOUN', 'N4', 669),
+(@lang_jp, '拝見', 'はいけん', 'haiken', 'NOUN', 'N4', 670),
+(@lang_jp, '運ぶ', 'はこぶ', 'hakobu', 'VERB', 'N4', 671),
+(@lang_jp, '始める', 'はじめる', 'hajimeru', 'VERB', 'N4', 672),
+(@lang_jp, '場所', 'ばしょ', 'basho', 'NOUN', 'N4', 673),
+(@lang_jp, '恥ずかしい', 'はずかしい', 'hazukashii', 'ADJ', 'N4', 674),
+(@lang_jp, '発音', 'はつおん', 'hatsuon', 'NOUN', 'N4', 675),
+(@lang_jp, '払う', 'はらう', 'harau', 'VERB', 'N4', 676),
+(@lang_jp, '番組', 'ばんぐみ', 'bangumi', 'NOUN', 'N4', 677),
+(@lang_jp, '反対', 'はんたい', 'hantai', 'NOUN', 'N4', 678),
+(@lang_jp, '冷える', 'ひえる', 'hieru', 'VERB', 'N4', 679),
+(@lang_jp, '光', 'ひかり', 'hikari', 'NOUN', 'N4', 680),
+(@lang_jp, '引き出し', 'ひきだし', 'hikidashi', 'NOUN', 'N4', 681),
+(@lang_jp, '髭', 'ひげ', 'hige', 'NOUN', 'N4', 682),
+(@lang_jp, '飛行場', 'ひこうじょう', 'hikoujou', 'NOUN', 'N4', 683),
+(@lang_jp, '久しぶり', 'ひさしぶり', 'hisashiburi', 'NOUN', 'N4', 684),
+(@lang_jp, '美術館', 'びじゅつかん', 'bijutsukan', 'NOUN', 'N4', 685),
+(@lang_jp, '必要', 'ひつよう', 'hitsuyou', 'ADJ', 'N4', 686),
+(@lang_jp, '人々', 'ひとびと', 'hitobito', 'NOUN', 'N4', 687),
+(@lang_jp, '昼間', 'ひるま', 'hiruma', 'NOUN', 'N4', 688),
+(@lang_jp, '昼休み', 'ひるやすみ', 'hiruyasumi', 'NOUN', 'N4', 689),
+(@lang_jp, '増える', 'ふえる', 'fueru', 'VERB', 'N4', 690),
+(@lang_jp, '深い', 'ふかい', 'fukai', 'ADJ', 'N4', 691),
+(@lang_jp, '複雑', 'ふくざつ', 'fukuzatsu', 'ADJ', 'N4', 692),
+(@lang_jp, '復習', 'ふくしゅう', 'fukushuu', 'NOUN', 'N4', 693),
+(@lang_jp, '太る', 'ふとる', 'futoru', 'VERB', 'N4', 694),
+(@lang_jp, '布団', 'ふとん', 'futon', 'NOUN', 'N4', 695),
+(@lang_jp, '船', 'ふね', 'fune', 'NOUN', 'N4', 696),
+(@lang_jp, '不便', 'ふべん', 'fuben', 'ADJ', 'N4', 697),
+(@lang_jp, '踏む', 'ふむ', 'fumu', 'VERB', 'N4', 698),
+(@lang_jp, '文化', 'ぶんか', 'bunka', 'NOUN', 'N4', 699),
+(@lang_jp, '文学', 'ぶんがく', 'bungaku', 'NOUN', 'N4', 700),
+(@lang_jp, '文法', 'ぶんぽう', 'bunpou', 'NOUN', 'N4', 701),
+(@lang_jp, '貿易', 'ぼうえき', 'boueki', 'NOUN', 'N4', 702),
+(@lang_jp, '放送', 'ほうそう', 'housou', 'NOUN', 'N4', 703),
+(@lang_jp, '法律', 'ほうりつ', 'houritsu', 'NOUN', 'N4', 704),
+(@lang_jp, '僕', 'ぼく', 'boku', 'PRON', 'N4', 705),
+(@lang_jp, '星', 'ほし', 'hoshi', 'NOUN', 'N4', 706),
+(@lang_jp, '骨', 'ほね', 'hone', 'NOUN', 'N4', 707),
+(@lang_jp, '褒める', 'ほめる', 'homeru', 'VERB', 'N4', 708),
+(@lang_jp, '翻訳', 'ほんやく', 'hon-yaku', 'NOUN', 'N4', 709);
+
+-- Auto-create base meanings for inserted N4 words (Vietnamese fallback uses romaji-based mapping; admin can refine later)
+SET @lang_vi := (SELECT id FROM languages WHERE code = 'vi' LIMIT 1);
+INSERT IGNORE INTO word_meanings (word_id, translation_lang_id, meaning, example_sentence, example_translation)
+SELECT w.id, @lang_vi,
+       CASE w.romaji
+         WHEN 'kaigi' THEN 'cuộc họp' WHEN 'keikaku' THEN 'kế hoạch' WHEN 'keiken' THEN 'kinh nghiệm'
+         WHEN 'keshiki' THEN 'phong cảnh' WHEN 'kekkon' THEN 'kết hôn' WHEN 'gen-in' THEN 'nguyên nhân'
+         WHEN 'kouka' THEN 'hiệu quả' WHEN 'kougyou' THEN 'công nghiệp' WHEN 'koukou' THEN 'trường cấp 3'
+         WHEN 'koujou' THEN 'nhà máy' WHEN 'kouchou' THEN 'hiệu trưởng' WHEN 'koutsuu' THEN 'giao thông'
+         WHEN 'koudou' THEN 'hội trường' WHEN 'koumuin' THEN 'công chức' WHEN 'kokusai' THEN 'quốc tế'
+         WHEN 'kokoro' THEN 'tấm lòng' WHEN 'koshou' THEN 'hỏng hóc' WHEN 'kotae' THEN 'câu trả lời'
+         WHEN 'kondo' THEN 'lần này' WHEN 'konya' THEN 'tối nay' WHEN 'saikin' THEN 'gần đây'
+         WHEN 'saigo' THEN 'cuối cùng' WHEN 'saisho' THEN 'đầu tiên' WHEN 'shiken' THEN 'kỳ thi'
+         WHEN 'jiko' THEN 'tai nạn' WHEN 'jishin' THEN 'động đất' WHEN 'shippai' THEN 'thất bại'
+         WHEN 'shitsurei' THEN 'thất lễ' WHEN 'shakai' THEN 'xã hội' WHEN 'shachou' THEN 'giám đốc'
+         WHEN 'jiyuu' THEN 'tự do' WHEN 'shuukan' THEN 'thói quen' WHEN 'juusho' THEN 'địa chỉ'
+         WHEN 'shusseki' THEN 'có mặt' WHEN 'shuppatsu' THEN 'xuất phát' WHEN 'shumi' THEN 'sở thích'
+         WHEN 'junbi' THEN 'chuẩn bị' WHEN 'shoukai' THEN 'giới thiệu' WHEN 'shougatsu' THEN 'tết'
+         WHEN 'shourai' THEN 'tương lai' WHEN 'shokuji' THEN 'bữa ăn' WHEN 'josei' THEN 'phụ nữ'
+         WHEN 'shinpai' THEN 'lo lắng' WHEN 'shinsetsu' THEN 'tử tế' WHEN 'sekai' THEN 'thế giới'
+         WHEN 'setsumei' THEN 'giải thích' WHEN 'sensou' THEN 'chiến tranh' WHEN 'senmon' THEN 'chuyên môn'
+         WHEN 'soudan' THEN 'thảo luận' WHEN 'sotsugyou' THEN 'tốt nghiệp' WHEN 'sofu' THEN 'ông nội/ngoại'
+         WHEN 'sobo' THEN 'bà nội/ngoại' WHEN 'taifuu' THEN 'bão' WHEN 'daiji' THEN 'quan trọng'
+         WHEN 'tanoshimi' THEN 'niềm vui' WHEN 'chikara' THEN 'sức mạnh' WHEN 'chuui' THEN 'chú ý'
+         WHEN 'tsugou' THEN 'tình hình' WHEN 'tsutaeru' THEN 'truyền đạt' WHEN 'tsuma' THEN 'vợ'
+         WHEN 'teinei' THEN 'lịch sự' WHEN 'tekitou' THEN 'thích hợp' WHEN 'dougu' THEN 'dụng cụ'
+         WHEN 'tochuu' THEN 'giữa đường' WHEN 'dorobou' THEN 'tên trộm' WHEN 'nikki' THEN 'nhật ký'
+         WHEN 'nedan' THEN 'giá cả' WHEN 'netsu' THEN 'sốt' WHEN 'baai' THEN 'trường hợp'
+         WHEN 'hajimeru' THEN 'bắt đầu' WHEN 'basho' THEN 'địa điểm' WHEN 'hatsuon' THEN 'phát âm'
+         WHEN 'harau' THEN 'trả tiền' WHEN 'hantai' THEN 'phản đối' WHEN 'hitsuyou' THEN 'cần thiết'
+         WHEN 'fukuzatsu' THEN 'phức tạp' WHEN 'fukushuu' THEN 'ôn tập' WHEN 'fuben' THEN 'bất tiện'
+         WHEN 'bunka' THEN 'văn hóa' WHEN 'bungaku' THEN 'văn học' WHEN 'bunpou' THEN 'ngữ pháp'
+         WHEN 'boueki' THEN 'thương mại' WHEN 'housou' THEN 'phát sóng' WHEN 'houritsu' THEN 'pháp luật'
+         WHEN 'hon-yaku' THEN 'phiên dịch'
+         ELSE CONCAT('(', w.romaji, ')')
+       END,
+       NULL, NULL
+FROM words w
+WHERE w.language_id = @lang_jp AND w.jlpt_level = 'N4' AND w.frequency_rank BETWEEN 510 AND 709
+  AND NOT EXISTS (SELECT 1 FROM word_meanings wm WHERE wm.word_id = w.id);
