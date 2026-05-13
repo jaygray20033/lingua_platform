@@ -154,36 +154,12 @@ DB_POOL_ACQ_TIMEOUT=30
 
 ---
 
-## 4. Sinh khóa JWT mới
 
-> **BUG-02**: Khóa cũ trong zip có thể đã lộ. Bắt buộc tạo cặp khóa mới trước khi chạy.
-
-```bash
-cd lingua-backend
-
-# Xóa khóa cũ (nếu còn)
-rm -f secrets/privateKey.pem secrets/publicKey.pem
-rm -f src/main/resources/privateKey.pem
-
-# Sinh cặp khóa RSA 2048-bit mới
-mkdir -p secrets
-openssl genrsa -out secrets/privateKey.pem 2048
-openssl rsa -in secrets/privateKey.pem -pubout -out secrets/publicKey.pem
-
-# Public key để Quarkus verify token: copy vào META-INF/resources
-mkdir -p src/main/resources/META-INF/resources
-cp secrets/publicKey.pem src/main/resources/META-INF/resources/publicKey.pem
-
-cd ..
-```
-
-> ✅ Private key chỉ tồn tại tại `lingua-backend/secrets/privateKey.pem`. Trong Docker Compose nó được **mount read‑only** vào container — không bake vào image, không commit lên git (`.gitignore` đã chặn `*.pem` trừ `publicKey.pem`).
 
 ---
 
 ## 5. Cách 1 — Chạy bằng Docker Compose (one‑command, khuyến nghị)
 
-> **BUG-11**: `docker-compose.yml` giờ đã có đầy đủ 4 service — `mysql`, `redis`, `backend`, `frontend`. Chỉ cần một câu lệnh là toàn bộ stack chạy.
 
 ```bash
 cd webapp
@@ -325,37 +301,6 @@ curl -X POST http://localhost:8080/api/auth/login \
 
 ---
 
-## 9. Tổng hợp các bug đã sửa
-
-| ID | Mô tả | File chính |
-|----|-------|-----------|
-| **BUG‑01** | Flyway crash với MySQL 8.0 → thêm `flyway-mysql 10.10.0` | `lingua-backend/pom.xml` |
-| **BUG‑02** | Private key bị commit → xóa khỏi repo, sinh mới, mount qua secret | `secrets/`, `.gitignore` |
-| **BUG‑03** | Dark mode không áp dụng cho `<body>` → toggle class trên `<html>` | `src/store/index.js`, `src/main.jsx` |
-| **BUG‑04** | `esbuild` ở `dependencies` → di chuyển sang `devDependencies` | `lingua-frontend/package.json` |
-| **BUG‑05** | `srsAPI.getDue(uid)` truyền tham số thừa → bỏ tham số | `src/pages/FlashcardSRS.jsx` |
-| **BUG‑06** | Không có trang Register độc lập → tạo `/register` | `src/pages/Register.jsx`, `src/App.jsx` |
-| **BUG‑11** | `docker-compose.yml` thiếu backend + frontend → thêm 2 service mới | `docker-compose.yml`, `Dockerfile`s |
-| **BUG‑12** | Google Translate TTS vi phạm ToS → bỏ, dùng pre‑generated audio + Web Speech | `src/utils/tts.js` |
-| **BUG‑13** | Title tab browser luôn cố định → hook `useDocumentTitle` cho mọi trang | `src/hooks/useDocumentTitle.js` |
-| **BUG‑14** | Thiếu index DB cho query phổ biến → migration V22 | `db/migration/V22__add_performance_indexes.sql` |
-| **BUG‑15** | Loading state không nhất quán → component `Skeleton*` dùng chung | `src/components/Skeleton.jsx` |
-| **TECH‑01** | Quarkus 3.8.4 → 3.15.1 LTS, axios → 1.7.x, lucide → 0.400+, react-router → 6.28+ | `pom.xml`, `package.json` |
-| **TECH‑07** | Connection pool DB rõ ràng (min=5, max=20, timeout=30s) | `application.properties` |
-| **BUG‑C00** | Backend Dockerfile dùng `./mvnw` (không tồn tại) → đổi sang `maven:3.9-eclipse-temurin-17`, thêm `wget` | `lingua-backend/Dockerfile` |
-| **BUG‑C01** | `.env` thiếu `http://localhost` trong `CORS_ORIGINS` → Docker frontend bị block CORS | `webapp/.env`, `.env.example` |
-| **BUG‑C02** | `start-backend.sh` chưa có / sai port MySQL & Redis & DB name → tạo mới với cấu hình đúng (3307/lingua_db/6380) | `webapp/start-backend.sh` |
-| **BUG‑H01** | `ecosystem.config.cjs` hardcode `/home/user/webapp` → đổi sang `path.resolve(__dirname)`, sửa frontend `error_file` | `webapp/ecosystem.config.cjs` |
-| **BUG‑H02** | `isFromTrustedProxy()` luôn `true` → check IP thật vs danh sách trusted | `AuthResource.java` |
-| **BUG‑H03** | `clientIp()` trả `"unknown"` khi không có `X-Forwarded-For` → fallback IP từ Vert.x socket | `AuthResource.java` |
-| **BUG‑M01** | Tài liệu nói port 5173 trong khi config là 3000 → đồng bộ về `3000` | `huongdanchay.md` |
-| **BUG‑M02** | `lingua.refresh.lifespan-seconds` không khai báo → thêm vào properties + `.env.example` | `application.properties`, `.env.example` |
-| **BUG‑M03** | Dockerfile HEALTHCHECK dùng `/q/health` (không có) → đổi sang `/api/health` | `lingua-backend/Dockerfile` |
-| **BUG‑L01** | Comment `BUG-15` sót trong `vite.config.js` | `lingua-frontend/vite.config.js` |
-| **BUG‑L02** | `VITE_API_BASE_URL` trong `.env.example` không dùng đến → xóa | `webapp/.env.example` |
-
----
-
 ## 10. Tài khoản test
 
 > Tài khoản mặc định trong seed data (V2):
@@ -373,7 +318,6 @@ Hoặc đăng ký tài khoản mới qua trang `/register`.
 
 ### `docker compose up -d --build` báo `failed to compute cache key: "/.mvn": not found` hoặc `"/mvnw": not found`
 
-→ Bạn đang dùng `lingua-backend/Dockerfile` cũ (trước BUG‑C00). Bản patch hiện tại đã đổi sang dùng image `maven:3.9-eclipse-temurin-17` để khỏi phụ thuộc Maven wrapper. Kiểm tra:
 
 ```bash
 head -3 lingua-backend/Dockerfile
